@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delícia da Bel - Sistema Completo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4ecdc4;
+            --accent: #ffd166;
+            --dark: #1a535c;
+            --light: #f7fff7;
+            --gray: #e0e0e0;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --proteina: #ff6b6b;
+            --guarnicao: #06d6a0;
+            --bebida: #118ab2;
+            --suco: #9b5de5;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 15px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f8f9fa"/><path d="M0,0 Q50,20 100,0 T100,100 Q50,80 0,100 T0,0 Z" fill="%23ff6b6b" opacity="0.05"/></svg>');
+            background-size: 400px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hidden { 
+            display: none !important; 
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: var(--radius);
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 15px;
+            position: relative;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .logo i {
+            font-size: 35px;
+            color: var(--primary);
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+            margin-top: 15px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--gray);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Login */
+        #login-page .card {
+            max-width: 500px;
+            margin: 30px auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--gray);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #ff8e8e 100%);
+            color: white;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #cccccc !important;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--gray);
+            color: var(--dark);
+        }
+
+        /* Menu */
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 8px 0;
+            margin-bottom: 15px;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .category-tab {
+            padding: 10px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: 600;
+            transition: var(--transition);
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .category-tab.proteina { background: rgba(255, 107, 107, 0.1); color: var(--proteina); }
+        .category-tab.guarnicao { background: rgba(6, 214, 160, 0.1); color: var(--guarnicao); }
+        .category-tab.bebida { background: rgba(17, 138, 178, 0.1); color: var(--bebida); }
+        .category-tab.suco { background: rgba(155, 93, 229, 0.1); color: var(--suco); }
+
+        .category-tab.active {
+            color: white;
+        }
+
+        .category-tab.proteina.active { background: var(--proteina); }
+        .category-tab.guarnicao.active { background: var(--guarnicao); }
+        .category-tab.bebida.active { background: var(--bebida); }
+        .category-tab.suco.active { background: var(--suco); }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            position: relative;
+            border: 1px solid var(--gray);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .menu-item-content {
+            padding: 15px;
+        }
+
+        .menu-item h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+
+        .menu-item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .proteina .price { color: var(--proteina); }
+        .guarnicao .price { color: var(--guarnicao); }
+        .bebida .price { color: var(--bebida); }
+        .suco .price { color: var(--suco); }
+
+        .add-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        .add-btn:hover {
+            transform: scale(1.1);
+            background: var(--dark);
+        }
+
+        /* Order */
+        .order-items-container {
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .item-info {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--light);
+            border-radius: 50px;
+            padding: 4px;
+        }
+
+        .quantity-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+        }
+
+        .delete-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 18px 0 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-top: 2px solid var(--gray);
+            margin-top: 8px;
+        }
+
+        /* Delivery Options */
+        .delivery-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .delivery-card {
+            background: white;
+            border: 2px solid var(--gray);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .delivery-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .delivery-card.selected {
+            border-color: var(--primary);
+            background: rgba(255, 107, 107, 0.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.1);
+        }
+
+        .delivery-card i {
+            font-size: 2.2rem;
+            color: var(--primary);
+            background: rgba(255, 107, 107, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delivery-card h3 {
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+
+        .delivery-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Receipt */
+        .receipt-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 25px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed var(--gray);
+        }
+
+        .receipt-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .client-info {
+            margin: 10px 0;
+            text-align: left;
+            font-size: 0.85rem;
+            padding: 8px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .receipt-line {
+            border-bottom: 1px dashed #ccc;
+            margin: 12px 0;
+        }
+
+        .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+
+        .receipt-total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px dashed var(--gray);
+        }
+
+        .receipt-address {
+            background: var(--light);
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .print-btn {
+            display: block;
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .print-btn:hover {
+            background: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            margin-top: 12px;
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+        }
+
+        @media print {
+            .whatsapp-btn {
+                display: none;
+            }
+        }
+
+        /* Navigation */
+        .step-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .step-buttons .btn {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .btn-back {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        /* Responsive */
+        @media (min-width: 480px) {
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header p {
+                font-size: 1.1rem;
+            }
+            
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .logo i {
+                font-size: 40px;
+            }
+            
+            .logout-btn {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                width: auto;
+                margin-top: 0;
+            }
+            
+            .form-grid {
+                gap: 15px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .app-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 25px;
+            }
+            
+            .menu-section {
+                grid-column: 1;
+                grid-row: 1;
+            }
+            
+            .order-summary {
+                grid-column: 2;
+                grid-row: 1;
+            }
+            
+            .step-section {
+                grid-column: 1 / span 2;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Página de Login -->
+        <div id="login-page">
+            <div class="header">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h1>Delícia da Bel</h1>
+                <p>Sistema de pedidos completo para sua conveniência</p>
+            </div>
+            
+            <div class="card fade-in">
+                <h2 class="card-title"><i class="fas fa-sign-in-alt"></i> Faça seu login</h2>
+                <form id="loginForm" onsubmit="event.preventDefault(); handleLogin()">
+                    <div class="form-group">
+                        <label for="firstName">Seu nome completo</label>
+                        <input type="text" id="firstName" placeholder="Nome" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Telefone</label>
+                        <input type="tel" id="phone" placeholder="(00) 00000-0000" required
+                            pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Entrar
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Aplicativo Principal -->
+        <div id="main-app" class="hidden">
+            <div class="header">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h1>Delícia da Bel</h1>
+                <p>Bem-vindo, <span id="logged-user"></span></p>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
+
+            <div class="app-container">
+                <!-- Menu e Pedido -->
+                <div class="menu-section card fade-in">
+                    <h2 class="card-title"><i class="fas fa-book-open"></i> Cardápio</h2>
+                    <div class="category-tabs" id="category-tabs"></div>
+                    <div class="menu-grid" id="menu-items"></div>
+                </div>
+                
+                <div class="order-summary card fade-in">
+                    <h2 class="card-title"><i class="fas fa-receipt"></i> Resumo do Pedido</h2>
+                    <div class="order-items-container" id="order-items-container"></div>
+                    <div class="order-total">
+                        <span>Total:</span>
+                        <span>R$<span id="order-total">0.00</span></span>
+                    </div>
+                    <button class="btn btn-primary" onclick="showStep('delivery-step')">
+                        <i class="fas fa-arrow-right"></i> Continuar
+                    </button>
+                </div>
+
+                <!-- Etapa de Entrega -->
+                <div id="delivery-step" class="step-section card hidden fade-in">
+                    <h2 class="card-title"><i class="fas fa-truck"></i> Forma de Entrega</h2>
+                    <div class="delivery-options">
+                        <div class="delivery-card" onclick="selectDelivery('retirada')">
+                            <i class="fas fa-store"></i>
+                            <h3>Retirada no Local</h3>
+                            <p>Venha buscar seu pedido</p>
+                        </div>
+                        <div class="delivery-card" onclick="selectDelivery('entrega')">
+                            <i class="fas fa-motorcycle"></i>
+                            <h3>Entrega</h3>
+                            <p>Entregamos no seu endereço</p>
+                        </div>
+                    </div>
+                    
+                    <div id="address-form-container" class="hidden">
+                        <h3 class="card-title"><i class="fas fa-map-marker-alt"></i> Endereço de Entrega</h3>
+                        <div class="form-group">
+                            <label for="street">Rua</label>
+                            <input type="text" id="street" placeholder="Nome da rua" required>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="number">Número</label>
+                                <input type="text" id="number" placeholder="Número" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="neighborhood">Bairro</label>
+                                <input type="text" id="neighborhood" placeholder="Bairro" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="complement">Complemento</label>
+                            <input type="text" id="complement" placeholder="Complemento">
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="city">Cidade</label>
+                                <input type="text" id="city" placeholder="Cidade" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="state">Estado</label>
+                                <input type="text" id="state" placeholder="Estado" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="delivery-notes">Instruções de entrega</label>
+                            <textarea id="delivery-notes" placeholder="Opcional" rows="3"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="step-buttons">
+                        <button class="btn btn-back" onclick="showStep('order-summary')">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                        <button class="btn btn-primary" id="continue-to-payment" onclick="proceedToPayment()" disabled>
+                            Continuar <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Etapa de Pagamento -->
+                <div id="payment-step" class="step-section card hidden fade-in">
+                    <h2 class="card-title"><i class="fas fa-credit-card"></i> Forma de Pagamento</h2>
+                    
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-receipt"></i> Resumo do Pedido</h3>
+                        <div id="review-items"></div>
+                        <div class="receipt-item">
+                            <span>Entrega:</span>
+                            <span id="delivery-type-review"></span>
+                        </div>
+                        <div class="receipt-total">
+                            <span>Total:</span>
+                            <span>R$<span id="review-total">0.00</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="delivery-options">
+                        <div class="delivery-card" onclick="selectPayment('dinheiro')">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <h3>Dinheiro</h3>
+                            <p>Pagamento na entrega</p>
+                        </div>
+                        <div class="delivery-card" onclick="selectPayment('cartao')">
+                            <i class="fas fa-credit-card"></i>
+                            <h3>Cartão</h3>
+                            <p>Débito ou crédito</p>
+                        </div>
+                        <div class="delivery-card" onclick="selectPayment('pix')">
+                            <i class="fas fa-qrcode"></i>
+                            <h3>PIX</h3>
+                            <p>Pagamento instantâneo</p>
+                        </div>
+                    </div>
+                    
+                    <div id="change-container" class="hidden">
+                        <div class="form-group">
+                            <label for="change-amount">Troco para quanto?</label>
+                            <input type="number" id="change-amount" placeholder="Ex: 50.00" min="0" step="0.01">
+                        </div>
+                    </div>
+                    
+                    <div class="step-buttons">
+                        <button class="btn btn-back" onclick="showStep('delivery-step')">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                        <button class="btn btn-primary" onclick="generateReceipt()">
+                            <i class="fas fa-print"></i> Imprimir Pedido
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Comprovante para Impressão -->
+                <div id="receipt-step" class="step-section card hidden fade-in">
+                    <h2 class="card-title"><i class="fas fa-check-circle"></i> Pedido Confirmado!</h2>
+                    
+                    <div class="receipt-container">
+                        <div class="receipt-header">
+                            <h2 class="receipt-title">DELÍCIA DA BEL</h2>
+                            <p>Comprovante de Pedido</p>
+                            
+                            <!-- Informações do cliente adicionadas aqui -->
+                            <div class="client-info">
+                                <div><strong>Cliente:</strong> <span id="receipt-client-name"></span></div>
+                                <div><strong>Telefone:</strong> <span id="receipt-client-phone"></span></div>
+                            </div>
+                            
+                            <p id="receipt-date"></p>
+                        </div>
+                        
+                        <div class="receipt-line"></div>
+                        
+                        <div id="receipt-items"></div>
+                        
+                        <div class="receipt-item">
+                            <span>Entrega:</span>
+                            <span id="receipt-delivery-type"></span>
+                        </div>
+                        
+                        <div class="receipt-item">
+                            <span>Pagamento:</span>
+                            <span id="receipt-payment-method"></span>
+                        </div>
+                        
+                        <div id="receipt-change-container" class="receipt-item hidden">
+                            <span>Troco para:</span>
+                            <span>R$<span id="receipt-change-amount"></span></span>
+                        </div>
+                        
+                        <div id="receipt-address" class="receipt-address hidden">
+                            <h4 style="font-family: 'Courier New', monospace; color: var(--dark); margin-bottom: 5px;">ENDEREÇO DE ENTREGA</h4>
+                            <div id="receipt-address-details"></div>
+                        </div>
+                        
+                        <div class="receipt-line"></div>
+                        
+                        <div class="receipt-item receipt-total">
+                            <span>TOTAL:</span>
+                            <span>R$<span id="receipt-total">0.00</span></span>
+                        </div>
+                        
+                        <p style="text-align: center; margin: 20px 0; font-style: italic;">
+                            Obrigado pela sua preferência! Seu pedido está sendo preparado.
+                        </p>
+                        
+                        <button class="print-btn" onclick="window.print()">
+                            <i class="fas fa-print"></i> Imprimir Comprovante
+                        </button>
+                        <button class="print-btn whatsapp-btn" onclick="shareOrderViaWhatsApp()">
+                            <i class="fab fa-whatsapp"></i> Enviar Pedido pelo WhatsApp
+                        </button>
+                    </div>
+                    
+                    <div class="step-buttons">
+                        <button class="btn btn-primary" onclick="resetToMenu()">
+                            <i class="fas fa-home"></i> Voltar ao Início
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+<script>
+    // Handle Login - sem mudanças significativas, só ajuste para evitar erros
+    function handleLogin() {
+        const firstNameInput = document.getElementById('firstName');
+        const phoneInput = document.getElementById('phone');
+        const firstName = firstNameInput.value.trim();
+        const phone = phoneInput.value.trim();
+
+        if (!firstName || !phone.match(/^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$/)) {
+            alert('Por favor, preencha todos os campos corretamente.');
+            return;
+        }
+
+        localStorage.setItem('client', JSON.stringify({ firstName, phone }));
+        document.getElementById('logged-user').textContent = firstName;
+        document.getElementById('login-page').classList.add('hidden');
+        document.getElementById('main-app').classList.remove('hidden');
+
+        loadMenu();
+    }
+
+    // Passar o event no onclick do botão para addToOrder
+    function addToOrder(itemId, event) {
+        const item = menuItems.find(i => i.id === itemId);
+        if (!item) return;
+
+        const existingItem = order.find(i => i.id === itemId);
+
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            order.push({
+                id: item.id,
+                name: item.name,
+                price: item.price,
+                quantity: 1,
+                category: item.category
+            });
+        }
+
+        updateOrderSummary();
+
+        // Feedback visual
+        const button = event?.target.closest('button');
+        if (button) {
+            button.innerHTML = '<i class="fas fa-check"></i>';
+            button.style.background = '#06d6a0';
+            setTimeout(() => {
+                button.innerHTML = '<i class="fas fa-plus"></i>';
+                button.style.background = '';
+            }, 1500);
+        }
+    }
+
+    // Atualiza o resumo do pedido, desabilita continuar se vazio
+    function updateOrderSummary() {
+        const container = document.getElementById('order-items-container');
+        const totalElement = document.getElementById('order-total');
+        const continueBtn = document.querySelector('.order-summary .btn-primary');
+
+        container.innerHTML = '';
+
+        if (order.length === 0) {
+            container.innerHTML = '<p style="text-align: center; padding: 20px; color: #777;">Seu pedido está vazio</p>';
+            totalElement.textContent = '0.00';
+            if (continueBtn) continueBtn.disabled = true;
+            return;
+        }
+
+        if (continueBtn) continueBtn.disabled = false;
+
+        let total = 0;
+
+        const categories = {};
+        order.forEach(item => {
+            if (!categories[item.category]) {
+                categories[item.category] = [];
+            }
+            categories[item.category].push(item);
+        });
+
+        for (const category in categories) {
+            const categoryTitle = document.createElement('div');
+            categoryTitle.style.marginTop = '15px';
+            categoryTitle.style.fontWeight = 'bold';
+            categoryTitle.style.color = 'var(--' + category + ')';
+            categoryTitle.textContent = category === 'proteina' ? 'PROTEÍNAS' :
+                category === 'guarnicao' ? 'GUARNIÇÕES' :
+                category === 'bebida' ? 'BEBIDAS' : 'SUCOS';
+            container.appendChild(categoryTitle);
+
+            categories[category].forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                const orderItem = document.createElement('div');
+                orderItem.className = 'order-item';
+                orderItem.innerHTML = `
+                    <div class="item-info">
+                        <strong>${item.name}</strong>
+                        ${item.price > 0 ? `<div>R$${item.price.toFixed(2)} × ${item.quantity}</div>` : ''}
+                    </div>
+                    <div class="item-actions">
+                        <div class="quantity-control">
+                            <div class="quantity-btn" onclick="changeQuantity(${item.id}, -1)">
+                                <i class="fas fa-minus"></i>
+                            </div>
+                            <span>${item.quantity}</span>
+                            <div class="quantity-btn" onclick="changeQuantity(${item.id}, 1)">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                        </div>
+                        <button class="delete-btn" onclick="removeFromOrder(${item.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(orderItem);
+            });
+        }
+
+        totalElement.textContent = total.toFixed(2);
+    }
+
+    // Validação endereço com evento input + controle do botão continuar na entrega
+    function setupAddressValidation() {
+        const fields = ['street', 'number', 'neighborhood', 'city', 'state'];
+        const continueBtn = document.getElementById('continue-to-payment');
+
+        fields.forEach(field => {
+            const element = document.getElementById(field);
+            if (element) {
+                element.addEventListener('input', () => {
+                    if (deliveryType === 'entrega') {
+                        continueBtn.disabled = !validateAddress();
+                    }
+                });
+            }
+        });
+    }
+
+    // Validar endereço
+    function validateAddress() {
+        if (deliveryType !== 'entrega') return true;
+
+        const requiredFields = ['street', 'number', 'neighborhood', 'city', 'state'];
+        return requiredFields.every(field =>
+            document.getElementById(field).value.trim() !== ''
+        );
+    }
+
+    // Seleciona tipo entrega e controla habilitação do botão
+    function selectDelivery(type) {
+        deliveryType = type;
+        const cards = document.querySelectorAll('.delivery-card');
+        const addressForm = document.getElementById('address-form-container');
+        const continueBtn = document.getElementById('continue-to-payment');
+
+        cards.forEach(card => {
+            card.classList.toggle('selected', card.querySelector('h3').textContent.includes(
+                type === 'retirada' ? 'Retirada' : 'Entrega'
+            ));
+        });
+
+        addressForm.classList.toggle('hidden', type === 'retirada');
+
+        if (type === 'retirada') {
+            continueBtn.disabled = order.length === 0;
+        } else {
+            continueBtn.disabled = !validateAddress() || order.length === 0;
+        }
+    }
+
+    // Seleciona pagamento e mostra campo troco se necessário
+    function selectPayment(method) {
+        paymentMethod = method;
+        const cards = document.querySelectorAll('#payment-step .delivery-card');
+        const changeContainer = document.getElementById('change-container');
+
+        cards.forEach(card => {
+            card.classList.toggle('selected', card.querySelector('h3').textContent ===
+                (method === 'dinheiro' ? 'Dinheiro' :
+                    method === 'cartao' ? 'Cartão' : 'PIX')
+            );
+        });
+
+        changeContainer.classList.toggle('hidden', method !== 'dinheiro');
+    }
+
+    // Compartilhar pedido via WhatsApp: escape conteúdo para evitar problemas no texto
+    function shareOrderViaWhatsApp() {
+        const client = JSON.parse(localStorage.getItem('client') || '{}');
+        const now = new Date();
+        const orderDate = now.toLocaleString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        let message = `*Novo Pedido - Delícia da Bel*\n\n`;
+        message += `*Data/Hora:* ${orderDate}\n`;
+        message += `*Cliente:* ${client.firstName || 'Não informado'}\n`;
+        message += `*Telefone:* ${client.phone || 'Não informado'}\n\n`;
+
+        message += `*Itens do Pedido:*\n`;
+        let total = 0;
+        order.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            message += `${item.quantity}x ${item.name} - ${item.price > 0 ? 'R$' + itemTotal.toFixed(2) : 'Incluso'}\n`;
+        });
+
+        if (deliveryType === 'entrega') {
+            message += `Taxa de Entrega - R$5.00\n`;
+            total += 5;
+        }
+
+        message += `\n*Total:* R$${total.toFixed(2)}\n`;
+        message += `\n*Entrega:* ${deliveryType === 'retirada' ? 'Retirada no Local' : 'Entrega'}\n`;
+
+        if (deliveryType === 'entrega') {
+            message += `\n*Endereço de Entrega:*\n`;
+            message += `${document.getElementById('street').value}, ${document.getElementById('number').value}\n`;
+            message += `${document.getElementById('neighborhood').value}\n`;
+            if (document.getElementById('complement').value) {
+                message += `Complemento: ${document.getElementById('complement').value}\n`;
+            }
+            message += `${document.getElementById('city').value} - ${document.getElementById('state').value}\n`;
+            if (document.getElementById('delivery-notes').value) {
+                message += `Instruções: ${document.getElementById('delivery-notes').value}\n`;
+            }
+        }
+
+        message += `\n*Método de Pagamento:* ${paymentMethod === 'dinheiro' ? 'Dinheiro' : paymentMethod === 'cartao' ? 'Cartão' : 'PIX'}\n`;
+
+        if (paymentMethod === 'dinheiro') {
+            const changeAmount = parseFloat(document.getElementById('change-amount').value) || 0;
+            message += `*Troco para:* R$${changeAmount.toFixed(2)}\n`;
+        }
+
+        const restaurantPhone = '558893240461';
+
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappLink = `https://wa.me/${restaurantPhone}?text=${encodedMessage}`;
+        window.open(whatsappLink, '_blank');
+    }
+
+    // Evento para formatar telefone com mais segurança (aceita backspace e colar)
+    document.getElementById('phone').addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 11) value = value.slice(0, 11);
+
+        if (value.length > 10) {
+            value = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7, 11)}`;
+        } else if (value.length > 5) {
+            value = `(${value.substring(0, 2)}) ${value.substring(2, 6)}-${value.substring(6)}`;
+        } else if (value.length > 2) {
+            value = `(${value.substring(0, 2)}) ${value.substring(2)}`;
+        } else if (value.length > 0) {
+            value = `(${value}`;
+        }
+
+        e.target.value = value;
+    });
+
+    // Ao carregar página
+    window.addEventListener('load', () => {
+        try {
+            const client = localStorage.getItem('client');
+            if (client) {
+                const { firstName } = JSON.parse(client);
+                document.getElementById('logged-user').textContent = firstName;
+                document.getElementById('login-page').classList.add('hidden');
+                document.getElementById('main-app').classList.remove('hidden');
+                loadMenu();
+            }
+        } catch {
+            // Caso JSON inválido, limpa localStorage para evitar erro
+            localStorage.removeItem('client');
+        }
+
+        updateOrderSummary();
+        setupAddressValidation();
+    });
+</script>
+</body>
+</html>
