@@ -6,8 +6,6 @@
     <title>Delícia da Bel - Sistema Completo</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <style>
-        /* --- Seu CSS original (omitido aqui para foco no JS, mas você deve manter todo seu CSS) --- */
-        /* Copie e cole todo o CSS que você já tinha aqui */
         :root {
             --primary: #ff6b6b;
             --secondary: #4ecdc4;
@@ -26,7 +24,708 @@
             --radius: 16px;
             --transition: all 0.3s ease;
         }
-        /* ... (todo seu CSS original continua aqui, sem alterações) ... */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 15px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f8f9fa"/><path d="M0,0 Q50,20 100,0 T100,100 Q50,80 0,100 T0,0 Z" fill="%23ff6b6b" opacity="0.05"/></svg>');
+            background-size: 400px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: var(--radius);
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 15px;
+            position: relative;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .logo i {
+            font-size: 35px;
+            color: var(--primary);
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+            margin-top: 15px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--gray);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Login */
+        #login-page .card {
+            max-width: 500px;
+            margin: 30px auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--gray);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #ff8e8e 100%);
+            color: white;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #cccccc !important;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--gray);
+            color: var(--dark);
+        }
+
+        /* Menu */
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 8px 0;
+            margin-bottom: 15px;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .category-tab {
+            padding: 10px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: 600;
+            transition: var(--transition);
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .category-tab.proteina {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--proteina);
+        }
+
+        .category-tab.guarnicao {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--guarnicao);
+        }
+
+        .category-tab.bebida {
+            background: rgba(17, 138, 178, 0.1);
+            color: var(--bebida);
+        }
+
+        .category-tab.suco {
+            background: rgba(155, 93, 229, 0.1);
+            color: var(--suco);
+        }
+
+        .category-tab.active {
+            color: white;
+        }
+
+        .category-tab.proteina.active {
+            background: var(--proteina);
+        }
+
+        .category-tab.guarnicao.active {
+            background: var(--guarnicao);
+        }
+
+        .category-tab.bebida.active {
+            background: var(--bebida);
+        }
+
+        .category-tab.suco.active {
+            background: var(--suco);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+            border: 1px solid var(--gray);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-item-content {
+            padding: 15px;
+        }
+
+        .menu-item h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+
+        .menu-item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .proteina .price {
+            color: var(--proteina);
+        }
+
+        .guarnicao .price {
+            color: var(--guarnicao);
+        }
+
+        .bebida .price {
+            color: var(--bebida);
+        }
+
+        .suco .price {
+            color: var(--suco);
+        }
+
+        .add-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        .add-btn:hover {
+            transform: scale(1.1);
+            background: var(--dark);
+        }
+
+        /* Order */
+        .order-items-container {
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .item-info {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--light);
+            border-radius: 50px;
+            padding: 4px;
+        }
+
+        .quantity-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .delete-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 18px 0 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-top: 2px solid var(--gray);
+            margin-top: 8px;
+        }
+
+        /* Delivery Options */
+        .delivery-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .delivery-card {
+            background: white;
+            border: 2px solid var(--gray);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .delivery-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .delivery-card.selected {
+            border-color: var(--primary);
+            background: rgba(255, 107, 107, 0.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.1);
+        }
+
+        .delivery-card i {
+            font-size: 2.2rem;
+            color: var(--primary);
+            background: rgba(255, 107, 107, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delivery-card h3 {
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+
+        .delivery-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Receipt */
+        .receipt-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 25px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed var(--gray);
+        }
+
+        .receipt-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .client-info {
+            margin: 10px 0;
+            text-align: left;
+            font-size: 0.85rem;
+            padding: 8px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .receipt-line {
+            border-bottom: 1px dashed #ccc;
+            margin: 12px 0;
+        }
+
+        .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+
+        .receipt-total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px dashed var(--gray);
+        }
+
+        .receipt-address {
+            background: var(--light);
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .print-btn {
+            display: block;
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .print-btn:hover {
+            background: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            margin-top: 12px;
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+        }
+
+        @media print {
+            .whatsapp-btn {
+                display: none;
+            }
+        }
+
+        /* Navigation */
+        .step-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .step-buttons .btn {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .btn-back {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        /* Responsive */
+        @media (min-width: 480px) {
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .header p {
+                font-size: 1.1rem;
+            }
+
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .logo i {
+                font-size: 40px;
+            }
+
+            .logout-btn {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                width: auto;
+                margin-top: 0;
+            }
+
+            .form-grid {
+                gap: 15px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .app-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 25px;
+            }
+
+            .menu-section {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .order-summary {
+                grid-column: 2;
+                grid-row: 1;
+            }
+
+            .step-section {
+                grid-column: 1 / span 2;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
     </style>
 </head>
 <body>
@@ -40,7 +739,7 @@
                 <h1>Delícia da Bel</h1>
                 <p>Sistema de pedidos completo para sua conveniência</p>
             </div>
-            
+
             <div class="card fade-in">
                 <h2 class="card-title"><i class="fas fa-sign-in-alt"></i> Faça seu login</h2>
                 <form id="loginForm" onsubmit="event.preventDefault(); handleLogin()">
@@ -48,6 +747,7 @@
                         <label for="firstName">Seu nome completo</label>
                         <input type="text" id="firstName" placeholder="Nome" required />
                     </div>
+
                     <div class="form-group">
                         <label for="phone">Telefone</label>
                         <input
@@ -58,6 +758,7 @@
                             pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
                         />
                     </div>
+
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-sign-in-alt"></i> Entrar
                     </button>
@@ -229,8 +930,12 @@
 
                             <!-- Informações do cliente adicionadas aqui -->
                             <div class="client-info">
-                                <div><strong>Cliente:</strong> <span id="receipt-client-name"></span></div>
-                                <div><strong>Telefone:</strong> <span id="receipt-client-phone"></span></div>
+                                <div>
+                                    <strong>Cliente:</strong> <span id="receipt-client-name"></span>
+                                </div>
+                                <div>
+                                    <strong>Telefone:</strong> <span id="receipt-client-phone"></span>
+                                </div>
                             </div>
 
                             <p id="receipt-date"></p>
@@ -291,621 +996,568 @@
         </div>
     </div>
 
-<script>
-    // Declara variáveis globais para evitar ReferenceError
-    let order = [];
-    let currentStep = "menu";
-    let deliveryType = "";
-    let paymentMethod = "";
+    <script>
+        // Variáveis globais para estado do app
+        let order = [];
+        let deliveryType = "";
+        let paymentMethod = "";
+        const menuItems = [
+            // Proteínas
+            { id: 1, name: "Bisteca de gado acebolado", price: 15.0, category: "proteina" },
+            { id: 2, name: "Almôndegas cebolada", price: 13.0, category: "proteina" },
+            { id: 3, name: "Calabresa acebolada", price: 13.0, category: "proteina" },
+            { id: 4, name: "Frango ao molho", price: 13.0, category: "proteina" },
+            { id: 5, name: "Porco cozido", price: 13.0, category: "proteina" },
+            { id: 6, name: "Peixe frito", price: 13.0, category: "proteina" },
 
-    // Dados do cardápio
-    const menuItems = [
-        { id: 1, name: "Bisteca de gado acebolado", price: 15.0, category: "proteina" },
-        { id: 2, name: "Almôndegas cebolada", price: 13.0, category: "proteina" },
-        { id: 3, name: "Calabresa acebolada", price: 13.0, category: "proteina" },
-        { id: 4, name: "Frango ao molho", price: 13.0, category: "proteina" },
-        { id: 5, name: "Porco cozido", price: 13.0, category: "proteina" },
-        { id: 6, name: "Peixe frito", price: 13.0, category: "proteina" },
-        { id: 7, name: "Arroz", price: 0.0, category: "guarnicao" },
-        { id: 8, name: "Feijão", price: 0.0, category: "guarnicao" },
-        { id: 9, name: "Farofa", price: 0.0, category: "guarnicao" },
-        { id: 10, name: "Salada", price: 0.0, category: "guarnicao" },
-        { id: 18, name: "Macarrão", price: 0.0, category: "guarnicao" },
-        { id: 11, name: "Refrigerante Pequeno", price: 5.0, category: "bebida" },
-        { id: 12, name: "Refrigerante Grande", price: 8.0, category: "bebida" },
-        { id: 13, name: "Suco de Maracujá", price: 6.0, category: "suco" },
-        { id: 14, name: "Suco de Goiaba", price: 6.0, category: "suco" },
-        { id: 15, name: "Suco de Melancia", price: 6.0, category: "suco" },
-        { id: 16, name: "Suco de Tomate", price: 6.0, category: "suco" },
-        { id: 17, name: "Suco de Manga", price: 6.0, category: "suco" }
-    ];
+            // Guarnições
+            { id: 7, name: "Arroz", price: 0.0, category: "guarnicao" },
+            { id: 8, name: "Feijão", price: 0.0, category: "guarnicao" },
+            { id: 9, name: "Farofa", price: 0.0, category: "guarnicao" },
+            { id: 10, name: "Salada", price: 0.0, category: "guarnicao" },
+            { id: 18, name: "Macarrão", price: 0.0, category: "guarnicao" },
 
-    // Função para login e validação simples
-    function handleLogin() {
-        const firstNameInput = document.getElementById("firstName");
-        const phoneInput = document.getElementById("phone");
-        const firstName = firstNameInput.value.trim();
-        const phone = phoneInput.value.trim();
+            // Bebidas
+            { id: 11, name: "Refrigerante Pequeno", price: 5.0, category: "bebida" },
+            { id: 12, name: "Refrigerante Grande", price: 8.0, category: "bebida" },
 
-        if (!firstName || !phone.match(/^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$/)) {
-            alert("Por favor, preencha todos os campos corretamente.");
-            return;
-        }
-
-        localStorage.setItem("client", JSON.stringify({ firstName, phone }));
-        document.getElementById("logged-user").textContent = firstName;
-        document.getElementById("login-page").classList.add("hidden");
-        document.getElementById("main-app").classList.remove("hidden");
-
-        loadMenu();
-    }
-
-    // Carrega as abas e itens do menu
-    function loadMenu() {
-        const tabsContainer = document.getElementById("category-tabs");
-        const menuContainer = document.getElementById("menu-items");
-        tabsContainer.innerHTML = "";
-        menuContainer.innerHTML = "";
-
+            // Sucos
+            { id: 13, name: "Suco de Maracujá", price: 6.0, category: "suco" },
+            { id: 14, name: "Suco de Goiaba", price: 6.0, category: "suco" },
+            { id: 15, name: "Suco de Melancia", price: 6.0, category: "suco" },
+            { id: 16, name: "Suco de Tomate", price: 6.0, category: "suco" },
+            { id: 17, name: "Suco de Manga", price: 6.0, category: "suco" },
+        ];
         const categories = [
             { id: "proteina", name: "Proteína" },
             { id: "guarnicao", name: "Guarnição" },
             { id: "bebida", name: "Bebida" },
-            { id: "suco", name: "Suco" }
+            { id: "suco", name: "Suco" },
         ];
 
-        categories.forEach(category => {
-            const tab = document.createElement("div");
-            tab.className = `category-tab ${category.id} ${
-                category.id === "proteina" ? "active" : ""
-            }`;
-            tab.textContent = category.name;
-            tab.dataset.category = category.id;
-            tab.onclick = () => filterMenu(category.id);
-            tabsContainer.appendChild(tab);
-        });
+        // Função para mostrar uma etapa e esconder as outras
+        function showStep(step) {
+            document.querySelectorAll(".step-section").forEach((el) => el.classList.add("hidden"));
+            document.getElementById(step)?.classList.remove("hidden");
+            currentStep = step;
 
-        filterMenu("proteina");
-    }
+            // Scroll para o topo
+            window.scrollTo(0, 0);
 
-    // Filtra e exibe itens por categoria
-    function filterMenu(categoryId) {
-        const menuContainer = document.getElementById("menu-items");
-        const tabs = document.querySelectorAll(".category-tab");
+            // Atualiza o resumo no passo pagamento
+            if (step === "payment-step") {
+                updatePaymentSummary();
+            }
+        }
 
-        tabs.forEach(tab => {
-            tab.classList.toggle("active", tab.dataset.category === categoryId);
-        });
+        // Função logout: limpa localStorage e recarrega página
+        function logout() {
+            localStorage.removeItem("client");
+            window.location.reload();
+        }
 
-        menuContainer.innerHTML = "";
+        // Handle Login
+        function handleLogin() {
+            const firstNameInput = document.getElementById("firstName");
+            const phoneInput = document.getElementById("phone");
+            const firstName = firstNameInput.value.trim();
+            const phone = phoneInput.value.trim();
 
-        const filteredItems = menuItems.filter(item => item.category === categoryId);
+            if (!firstName || !phone.match(/^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$/)) {
+                alert("Por favor, preencha todos os campos corretamente.");
+                return;
+            }
 
-        filteredItems.forEach(item => {
-            const menuItem = document.createElement("div");
-            menuItem.className = `menu-item ${item.category}`;
-            menuItem.innerHTML = `
-                <div class="menu-item-content">
-                    <h3>${item.name}</h3>
-                    <div class="menu-item-footer">
-                        <div class="price">${
-                            item.price > 0 ? "R$" + item.price.toFixed(2) : "Incluso"
-                        }</div>
-                        <button class="add-btn" onclick="addToOrder(${item.id}, event)">
-                            <i class="fas fa-plus"></i>
-                        </button>
+            localStorage.setItem("client", JSON.stringify({ firstName, phone }));
+            document.getElementById("logged-user").textContent = firstName;
+            document.getElementById("login-page").classList.add("hidden");
+            document.getElementById("main-app").classList.remove("hidden");
+
+            loadMenu();
+        }
+
+        // Carrega as abas de categoria e ativa filtro inicial
+        function loadMenu() {
+            const tabsContainer = document.getElementById("category-tabs");
+            const menuContainer = document.getElementById("menu-items");
+
+            tabsContainer.innerHTML = "";
+
+            categories.forEach((category) => {
+                const tab = document.createElement("div");
+                tab.className = `category-tab ${category.id} ${category.id === "proteina" ? "active" : ""}`;
+                tab.textContent = category.name;
+                tab.dataset.category = category.id;
+                tab.onclick = () => filterMenu(category.id);
+                tabsContainer.appendChild(tab);
+            });
+
+            filterMenu("proteina");
+        }
+
+        // Filtra itens do cardápio por categoria
+        function filterMenu(categoryId) {
+            const menuContainer = document.getElementById("menu-items");
+            const tabs = document.querySelectorAll(".category-tab");
+
+            tabs.forEach((tab) => {
+                tab.classList.toggle("active", tab.dataset.category === categoryId);
+            });
+
+            menuContainer.innerHTML = "";
+
+            const filteredItems = menuItems.filter((item) => item.category === categoryId);
+
+            filteredItems.forEach((item) => {
+                const menuItem = document.createElement("div");
+                menuItem.className = `menu-item ${item.category}`;
+                menuItem.innerHTML = `
+                    <div class="menu-item-content">
+                        <h3>${item.name}</h3>
+                        <div class="menu-item-footer">
+                            <div class="price">${item.price > 0 ? "R$" + item.price.toFixed(2) : "Incluso"}</div>
+                            <button class="add-btn" onclick="addToOrder(${item.id}, event)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            `;
-            menuContainer.appendChild(menuItem);
-        });
-    }
-
-    // Adiciona item ao pedido
-    function addToOrder(itemId, event) {
-        const item = menuItems.find(i => i.id === itemId);
-        if (!item) return;
-
-        const existingItem = order.find(i => i.id === itemId);
-
-        if (existingItem) {
-            existingItem.quantity++;
-        } else {
-            order.push({
-                id: item.id,
-                name: item.name,
-                price: item.price,
-                quantity: 1,
-                category: item.category
+                `;
+                menuContainer.appendChild(menuItem);
             });
         }
 
-        updateOrderSummary();
+        // Adiciona item no pedido
+        function addToOrder(itemId, event) {
+            const item = menuItems.find((i) => i.id === itemId);
+            if (!item) return;
 
-        // Feedback visual
-        const button = event?.target.closest("button");
-        if (button) {
-            button.innerHTML = '<i class="fas fa-check"></i>';
-            button.style.background = "#06d6a0";
-            setTimeout(() => {
-                button.innerHTML = '<i class="fas fa-plus"></i>';
-                button.style.background = "";
-            }, 1500);
-        }
-    }
+            const existingItem = order.find((i) => i.id === itemId);
 
-    // Atualiza resumo do pedido e habilita/desabilita botão Continuar
-    function updateOrderSummary() {
-        const container = document.getElementById("order-items-container");
-        const totalElement = document.getElementById("order-total");
-        const continueBtn = document.querySelector(".order-summary .btn-primary");
-
-        container.innerHTML = "";
-
-        if (order.length === 0) {
-            container.innerHTML =
-                '<p style="text-align: center; padding: 20px; color: #777;">Seu pedido está vazio</p>';
-            totalElement.textContent = "0.00";
-            if (continueBtn) continueBtn.disabled = true;
-            return;
-        }
-
-        if (continueBtn) continueBtn.disabled = false;
-
-        let total = 0;
-
-        // Agrupa por categoria
-        const categories = {};
-        order.forEach(item => {
-            if (!categories[item.category]) {
-                categories[item.category] = [];
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                order.push({
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    quantity: 1,
+                    category: item.category,
+                });
             }
-            categories[item.category].push(item);
-        });
 
-        for (const category in categories) {
-            const categoryTitle = document.createElement("div");
-            categoryTitle.style.marginTop = "15px";
-            categoryTitle.style.fontWeight = "bold";
-            categoryTitle.style.color = "var(--" + category + ")";
-            categoryTitle.textContent =
-                category === "proteina"
-                    ? "PROTEÍNAS"
-                    : category === "guarnicao"
-                    ? "GUARNIÇÕES"
-                    : category === "bebida"
-                    ? "BEBIDAS"
-                    : "SUCOS";
-            container.appendChild(categoryTitle);
+            updateOrderSummary();
 
-            categories[category].forEach(item => {
+            // Feedback visual
+            const button = event?.target.closest("button");
+            if (button) {
+                button.innerHTML = '<i class="fas fa-check"></i>';
+                button.style.background = "#06d6a0";
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-plus"></i>';
+                    button.style.background = "";
+                }, 1500);
+            }
+        }
+
+        // Atualiza resumo do pedido e controla botão continuar
+        function updateOrderSummary() {
+            const container = document.getElementById("order-items-container");
+            const totalElement = document.getElementById("order-total");
+            const continueBtn = document.querySelector(".order-summary .btn-primary");
+
+            container.innerHTML = "";
+
+            if (order.length === 0) {
+                container.innerHTML =
+                    '<p style="text-align: center; padding: 20px; color: #777;">Seu pedido está vazio</p>';
+                totalElement.textContent = "0.00";
+                if (continueBtn) continueBtn.disabled = true;
+                return;
+            }
+
+            if (continueBtn) continueBtn.disabled = false;
+
+            let total = 0;
+
+            const categories = {};
+            order.forEach((item) => {
+                if (!categories[item.category]) {
+                    categories[item.category] = [];
+                }
+                categories[item.category].push(item);
+            });
+
+            for (const category in categories) {
+                const categoryTitle = document.createElement("div");
+                categoryTitle.style.marginTop = "15px";
+                categoryTitle.style.fontWeight = "bold";
+                categoryTitle.style.color = "var(--" + category + ")";
+                categoryTitle.textContent =
+                    category === "proteina"
+                        ? "PROTEÍNAS"
+                        : category === "guarnicao"
+                        ? "GUARNIÇÕES"
+                        : category === "bebida"
+                        ? "BEBIDAS"
+                        : "SUCOS";
+                container.appendChild(categoryTitle);
+
+                categories[category].forEach((item) => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+
+                    const orderItem = document.createElement("div");
+                    orderItem.className = "order-item";
+                    orderItem.innerHTML = `
+                        <div class="item-info">
+                            <strong>${item.name}</strong>
+                            ${
+                                item.price > 0
+                                    ? `<div>R$${item.price.toFixed(2)} × ${item.quantity}</div>`
+                                    : ""
+                            }
+                        </div>
+                        <div class="item-actions">
+                            <div class="quantity-control">
+                                <div class="quantity-btn" onclick="changeQuantity(${item.id}, -1)">
+                                    <i class="fas fa-minus"></i>
+                                </div>
+                                <span>${item.quantity}</span>
+                                <div class="quantity-btn" onclick="changeQuantity(${item.id}, 1)">
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                            </div>
+                            <button class="delete-btn" onclick="removeFromOrder(${item.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    container.appendChild(orderItem);
+                });
+            }
+
+            totalElement.textContent = total.toFixed(2);
+        }
+
+        // Alterar quantidade do item no pedido
+        function changeQuantity(itemId, delta) {
+            const item = order.find((i) => i.id === itemId);
+            if (!item) return;
+
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                order = order.filter((i) => i.id !== itemId);
+            }
+            updateOrderSummary();
+            checkDeliveryContinueButton();
+        }
+
+        // Remover item do pedido
+        function removeFromOrder(itemId) {
+            order = order.filter((i) => i.id !== itemId);
+            updateOrderSummary();
+            checkDeliveryContinueButton();
+        }
+
+        // Validação endereço + controle do botão continuar
+        function setupAddressValidation() {
+            const fields = ["street", "number", "neighborhood", "city", "state"];
+            const continueBtn = document.getElementById("continue-to-payment");
+
+            fields.forEach((field) => {
+                const element = document.getElementById(field);
+                if (element) {
+                    element.addEventListener("input", () => {
+                        if (deliveryType === "entrega") {
+                            continueBtn.disabled = !validateAddress() || order.length === 0;
+                        }
+                    });
+                }
+            });
+        }
+
+        // Valida campos obrigatórios do endereço
+        function validateAddress() {
+            if (deliveryType !== "entrega") return true;
+
+            const requiredFields = ["street", "number", "neighborhood", "city", "state"];
+            return requiredFields.every((field) => document.getElementById(field).value.trim() !== "");
+        }
+
+        // Selecionar tipo de entrega e habilitar botão continuar
+        function selectDelivery(type) {
+            deliveryType = type;
+            const cards = document.querySelectorAll(".delivery-card");
+            const addressForm = document.getElementById("address-form-container");
+            const continueBtn = document.getElementById("continue-to-payment");
+
+            cards.forEach((card) => {
+                card.classList.toggle(
+                    "selected",
+                    card.querySelector("h3").textContent.includes(type === "retirada" ? "Retirada" : "Entrega")
+                );
+            });
+
+            addressForm.classList.toggle("hidden", type === "retirada");
+
+            if (type === "retirada") {
+                continueBtn.disabled = order.length === 0;
+            } else {
+                continueBtn.disabled = !validateAddress() || order.length === 0;
+            }
+        }
+
+        // Seleciona método de pagamento e mostra campo troco se necessário
+        function selectPayment(method) {
+            paymentMethod = method;
+            const cards = document.querySelectorAll("#payment-step .delivery-card");
+            const changeContainer = document.getElementById("change-container");
+
+            cards.forEach((card) => {
+                card.classList.toggle(
+                    "selected",
+                    card.querySelector("h3").textContent ===
+                        (method === "dinheiro" ? "Dinheiro" : method === "cartao" ? "Cartão" : "PIX")
+                );
+            });
+
+            changeContainer.classList.toggle("hidden", method !== "dinheiro");
+        }
+
+        // Atualiza resumo da etapa pagamento
+        function updatePaymentSummary() {
+            const reviewItems = document.getElementById("review-items");
+            const deliveryReview = document.getElementById("delivery-type-review");
+            const reviewTotal = document.getElementById("review-total");
+
+            reviewItems.innerHTML = "";
+            let total = 0;
+
+            order.forEach((item) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                const div = document.createElement("div");
+                div.className = "receipt-item";
+                div.textContent = `${item.quantity}x ${item.name} - R$${itemTotal.toFixed(2)}`;
+                reviewItems.appendChild(div);
+            });
+
+            if (deliveryType === "entrega") {
+                total += 5;
+                const deliveryDiv = document.createElement("div");
+                deliveryDiv.className = "receipt-item";
+                deliveryDiv.textContent = "Taxa de Entrega - R$5.00";
+                reviewItems.appendChild(deliveryDiv);
+            }
+
+            deliveryReview.textContent = deliveryType === "retirada" ? "Retirada no Local" : "Entrega";
+            reviewTotal.textContent = total.toFixed(2);
+        }
+
+        // Avança para etapa pagamento
+        function proceedToPayment() {
+            showStep("payment-step");
+        }
+
+        // Gera comprovante e mostra etapa final
+        function generateReceipt() {
+            if (!paymentMethod) {
+                alert("Por favor, selecione uma forma de pagamento.");
+                return;
+            }
+
+            const client = JSON.parse(localStorage.getItem("client") || "{}");
+
+            document.getElementById("receipt-client-name").textContent = client.firstName || "";
+            document.getElementById("receipt-client-phone").textContent = client.phone || "";
+
+            const now = new Date();
+            document.getElementById("receipt-date").textContent = now.toLocaleString("pt-BR");
+
+            const receiptItems = document.getElementById("receipt-items");
+            receiptItems.innerHTML = "";
+            let total = 0;
+
+            order.forEach((item) => {
                 const itemTotal = item.price * item.quantity;
                 total += itemTotal;
 
-                const orderItem = document.createElement("div");
-                orderItem.className = "order-item";
-                orderItem.innerHTML = `
-                    <div class="item-info">
-                        <strong>${item.name}</strong>
-                        ${item.price > 0 ? `<div>R$${item.price.toFixed(2)} × ${item.quantity}</div>` : ""}
-                    </div>
-                    <div class="item-actions">
-                        <div class="quantity-control">
-                            <div class="quantity-btn" onclick="changeQuantity(${item.id}, -1)">
-                                <i class="fas fa-minus"></i>
-                            </div>
-                            <span>${item.quantity}</span>
-                            <div class="quantity-btn" onclick="changeQuantity(${item.id}, 1)">
-                                <i class="fas fa-plus"></i>
-                            </div>
-                        </div>
-                        <button class="delete-btn" onclick="removeFromOrder(${item.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `;
-                container.appendChild(orderItem);
+                const div = document.createElement("div");
+                div.className = "receipt-item";
+                div.textContent = `${item.quantity}x ${item.name} - R$${itemTotal.toFixed(2)}`;
+                receiptItems.appendChild(div);
             });
+
+            if (deliveryType === "entrega") {
+                total += 5;
+                const deliveryDiv = document.createElement("div");
+                deliveryDiv.className = "receipt-item";
+                deliveryDiv.textContent = "Taxa de Entrega - R$5.00";
+                receiptItems.appendChild(deliveryDiv);
+            }
+
+            document.getElementById("receipt-delivery-type").textContent =
+                deliveryType === "retirada" ? "Retirada no Local" : "Entrega";
+
+            document.getElementById("receipt-payment-method").textContent =
+                paymentMethod === "dinheiro"
+                    ? "Dinheiro"
+                    : paymentMethod === "cartao"
+                    ? "Cartão"
+                    : "PIX";
+
+            if (paymentMethod === "dinheiro") {
+                const changeAmount = parseFloat(document.getElementById("change-amount").value) || 0;
+                if (changeAmount > 0) {
+                    document.getElementById("receipt-change-container").classList.remove("hidden");
+                    document.getElementById("receipt-change-amount").textContent = changeAmount.toFixed(2);
+                } else {
+                    document.getElementById("receipt-change-container").classList.add("hidden");
+                }
+            } else {
+                document.getElementById("receipt-change-container").classList.add("hidden");
+            }
+
+            if (deliveryType === "entrega") {
+                document.getElementById("receipt-address").classList.remove("hidden");
+
+                const addressDetails = `
+                    ${document.getElementById("street").value}, ${document.getElementById("number").value}<br/>
+                    ${document.getElementById("neighborhood").value}<br/>
+                    ${document.getElementById("complement").value ? "Complemento: " + document.getElementById("complement").value + "<br/>" : ""}
+                    ${document.getElementById("city").value} - ${document.getElementById("state").value}
+                `;
+
+                document.getElementById("receipt-address-details").innerHTML = addressDetails;
+            } else {
+                document.getElementById("receipt-address").classList.add("hidden");
+            }
+
+            document.getElementById("receipt-total").textContent = total.toFixed(2);
+
+            showStep("receipt-step");
         }
 
-        totalElement.textContent = total.toFixed(2);
-    }
+        // Compartilhar pedido via WhatsApp
+        function shareOrderViaWhatsApp() {
+            const client = JSON.parse(localStorage.getItem("client") || "{}");
+            const now = new Date();
+            const orderDate = now.toLocaleString("pt-BR", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+            });
 
-    // Ajusta quantidade
-    function changeQuantity(itemId, change) {
-        const item = order.find(i => i.id === itemId);
-        if (!item) return;
+            let message = `*Novo Pedido - Delícia da Bel*\n\n`;
+            message += `*Data/Hora:* ${orderDate}\n`;
+            message += `*Cliente:* ${client.firstName || "Não informado"}\n`;
+            message += `*Telefone:* ${client.phone || "Não informado"}\n\n`;
 
-        item.quantity += change;
+            message += `*Itens do Pedido:*\n`;
+            let total = 0;
+            order.forEach((item) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                message += `${item.quantity}x ${item.name} - ${item.price > 0 ? "R$" + itemTotal.toFixed(2) : "Incluso"}\n`;
+            });
 
-        if (item.quantity <= 0) {
-            removeFromOrder(itemId);
-        } else {
+            if (deliveryType === "entrega") {
+                message += `Taxa de Entrega - R$5.00\n`;
+                total += 5;
+            }
+
+            message += `\n*Total:* R$${total.toFixed(2)}\n`;
+            message += `\n*Entrega:* ${deliveryType === "retirada" ? "Retirada no Local" : "Entrega"}\n`;
+
+            if (deliveryType === "entrega") {
+                message += `\n*Endereço de Entrega:*\n`;
+                message += `${document.getElementById("street").value}, ${document.getElementById("number").value}\n`;
+                message += `${document.getElementById("neighborhood").value}\n`;
+                if (document.getElementById("complement").value) {
+                    message += `Complemento: ${document.getElementById("complement").value}\n`;
+                }
+                message += `${document.getElementById("city").value} - ${document.getElementById("state").value}\n`;
+                if (document.getElementById("delivery-notes").value) {
+                    message += `Instruções: ${document.getElementById("delivery-notes").value}\n`;
+                }
+            }
+
+            message += `\n*Método de Pagamento:* ${
+                paymentMethod === "dinheiro" ? "Dinheiro" : paymentMethod === "cartao" ? "Cartão" : "PIX"
+            }\n`;
+
+            if (paymentMethod === "dinheiro") {
+                const changeAmount = parseFloat(document.getElementById("change-amount").value) || 0;
+                message += `*Troco para:* R$${changeAmount.toFixed(2)}\n`;
+            }
+
+            const restaurantPhone = "558893240461";
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappLink = `https://wa.me/${restaurantPhone}?text=${encodedMessage}`;
+            window.open(whatsappLink, "_blank");
+        }
+
+        // Formata telefone no input com mais segurança (backspace, colar)
+        document.getElementById("phone").addEventListener("input", function (e) {
+            let value = e.target.value.replace(/\D/g, "");
+            if (value.length > 11) value = value.slice(0, 11);
+
+            if (value.length > 10) {
+                value = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7, 11)}`;
+            } else if (value.length > 5) {
+                value = `(${value.substring(0, 2)}) ${value.substring(2, 6)}-${value.substring(6)}`;
+            } else if (value.length > 2) {
+                value = `(${value.substring(0, 2)}) ${value.substring(2)}`;
+            } else if (value.length > 0) {
+                value = `(${value}`;
+            }
+
+            e.target.value = value;
+        });
+
+        // Checa se botão continuar na entrega deve ser habilitado
+        function checkDeliveryContinueButton() {
+            const continueBtn = document.getElementById("continue-to-payment");
+            if (deliveryType === "retirada") {
+                continueBtn.disabled = order.length === 0;
+            } else if (deliveryType === "entrega") {
+                continueBtn.disabled = !validateAddress() || order.length === 0;
+            } else {
+                continueBtn.disabled = true;
+            }
+        }
+
+        // Reseta pedido para o início (login)
+        function resetToMenu() {
+            order = [];
+            deliveryType = "";
+            paymentMethod = "";
+            document.getElementById("review-items").innerHTML = "";
+            document.getElementById("receipt-items").innerHTML = "";
+            showStep("order-summary");
             updateOrderSummary();
         }
-    }
 
-    // Remove item do pedido
-    function removeFromOrder(itemId) {
-        order = order.filter(item => item.id !== itemId);
-        updateOrderSummary();
-    }
-
-    // Controla a habilitação do botão Continuar e exibe formulário endereço
-    function selectDelivery(type) {
-        deliveryType = type;
-        const cards = document.querySelectorAll(".delivery-card");
-        const addressForm = document.getElementById("address-form-container");
-        const continueBtn = document.getElementById("continue-to-payment");
-
-        cards.forEach(card => {
-            card.classList.toggle(
-                "selected",
-                card.querySelector("h3").textContent.includes(type === "retirada" ? "Retirada" : "Entrega")
-            );
-        });
-
-        addressForm.classList.toggle("hidden", type === "retirada");
-
-        if (type === "retirada") {
-            continueBtn.disabled = order.length === 0;
-        } else {
-            continueBtn.disabled = !validateAddress() || order.length === 0;
-        }
-    }
-
-    // Valida o endereço de entrega
-    function validateAddress() {
-        if (deliveryType !== "entrega") return true;
-
-        const requiredFields = ["street", "number", "neighborhood", "city", "state"];
-        return requiredFields.every(field => document.getElementById(field).value.trim() !== "");
-    }
-
-    // Validação dinâmica no formulário de endereço
-    function setupAddressValidation() {
-        const fields = ["street", "number", "neighborhood", "city", "state"];
-        const continueBtn = document.getElementById("continue-to-payment");
-
-        fields.forEach(field => {
-            const element = document.getElementById(field);
-            if (element) {
-                element.addEventListener("input", () => {
-                    if (deliveryType === "entrega") {
-                        continueBtn.disabled = !validateAddress();
-                    }
-                });
+        // Ao carregar página, verifica login e carrega menu
+        window.addEventListener("load", () => {
+            try {
+                const client = localStorage.getItem("client");
+                if (client) {
+                    const { firstName } = JSON.parse(client);
+                    document.getElementById("logged-user").textContent = firstName;
+                    document.getElementById("login-page").classList.add("hidden");
+                    document.getElementById("main-app").classList.remove("hidden");
+                    loadMenu();
+                }
+            } catch {
+                localStorage.removeItem("client");
             }
+            updateOrderSummary();
+            setupAddressValidation();
         });
-    }
-
-    // Prossegue para etapa de pagamento
-    function proceedToPayment() {
-        if (!deliveryType) {
-            alert("Selecione uma forma de entrega!");
-            return;
-        }
-
-        if (deliveryType === "entrega" && !validateAddress()) {
-            alert("Por favor, preencha todos os campos obrigatórios do endereço.");
-            return;
-        }
-
-        showStep("payment-step");
-    }
-
-    // Seleciona método de pagamento e mostra campo troco se necessário
-    function selectPayment(method) {
-        paymentMethod = method;
-        const cards = document.querySelectorAll("#payment-step .delivery-card");
-        const changeContainer = document.getElementById("change-container");
-
-        cards.forEach(card => {
-            card.classList.toggle(
-                "selected",
-                card.querySelector("h3").textContent ===
-                    (method === "dinheiro" ? "Dinheiro" : method === "cartao" ? "Cartão" : "PIX")
-            );
-        });
-
-        changeContainer.classList.toggle("hidden", method !== "dinheiro");
-    }
-
-    // Gera o comprovante e mostra
-    function generateReceipt() {
-        if (order.length === 0) {
-            alert("Seu pedido está vazio!");
-            return;
-        }
-
-        if (!deliveryType) {
-            alert("Selecione a forma de entrega!");
-            showStep("delivery-step");
-            return;
-        }
-
-        if (!paymentMethod) {
-            alert("Selecione a forma de pagamento!");
-            showStep("payment-step");
-            return;
-        }
-
-        const container = document.getElementById("receipt-items");
-        const deliveryElement = document.getElementById("receipt-delivery-type");
-        const paymentElement = document.getElementById("receipt-payment-method");
-        const totalElement = document.getElementById("receipt-total");
-        const addressContainer = document.getElementById("receipt-address");
-        const addressDetails = document.getElementById("receipt-address-details");
-        const changeContainer = document.getElementById("receipt-change-container");
-        const changeAmountElement = document.getElementById("receipt-change-amount");
-        const receiptDate = document.getElementById("receipt-date");
-
-        // Dados do cliente
-        const client = JSON.parse(localStorage.getItem("client")) || {};
-        document.getElementById("receipt-client-name").textContent = client.firstName || "Não informado";
-        document.getElementById("receipt-client-phone").textContent = client.phone || "Não informado";
-
-        // Data/hora atual formatada
-        const now = new Date();
-        receiptDate.textContent = now.toLocaleString("pt-BR", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
-        });
-
-        container.innerHTML = "";
-        let total = 0;
-
-        order.forEach(item => {
-            const itemTotal = item.price * item.quantity;
-            total += itemTotal;
-
-            const itemElement = document.createElement("div");
-            itemElement.className = "receipt-item";
-            itemElement.innerHTML = `
-                <span>${item.quantity}x ${item.name}</span>
-                <span>${item.price > 0 ? "R$" + itemTotal.toFixed(2) : ""}</span>
-            `;
-            container.appendChild(itemElement);
-        });
-
-        // Taxa entrega se houver
-        if (deliveryType === "entrega") {
-            const deliveryItem = document.createElement("div");
-            deliveryItem.className = "receipt-item";
-            deliveryItem.innerHTML = `
-                <span>Taxa de Entrega</span>
-                <span>R$5.00</span>
-            `;
-            container.appendChild(deliveryItem);
-            total += 5;
-        }
-
-        deliveryElement.textContent = deliveryType === "retirada" ? "Retirada" : "Entrega";
-        paymentElement.textContent =
-            paymentMethod === "dinheiro" ? "Dinheiro" : paymentMethod === "cartao" ? "Cartão" : "PIX";
-
-        if (paymentMethod === "dinheiro") {
-            const changeAmount = parseFloat(document.getElementById("change-amount").value) || 0;
-            changeContainer.classList.remove("hidden");
-            changeAmountElement.textContent = changeAmount.toFixed(2);
-        } else {
-            changeContainer.classList.add("hidden");
-        }
-
-        if (deliveryType === "entrega") {
-            addressContainer.classList.remove("hidden");
-            addressDetails.innerHTML = `
-                <div>${document.getElementById("street").value}, ${document.getElementById("number").value}</div>
-                <div>${document.getElementById("neighborhood").value}</div>
-                <div>${
-                    document.getElementById("complement").value
-                        ? "Complemento: " + document.getElementById("complement").value
-                        : ""
-                }</div>
-                <div>${document.getElementById("city").value} - ${document.getElementById("state").value}</div>
-                <div>${
-                    document.getElementById("delivery-notes").value
-                        ? "Instruções: " + document.getElementById("delivery-notes").value
-                        : ""
-                }</div>
-            `;
-        } else {
-            addressContainer.classList.add("hidden");
-        }
-
-        totalElement.textContent = total.toFixed(2);
-
-        showStep("receipt-step");
-    }
-
-    // Compartilha pedido via WhatsApp
-    function shareOrderViaWhatsApp() {
-        const client = JSON.parse(localStorage.getItem("client") || "{}");
-        const now = new Date();
-        const orderDate = now.toLocaleString("pt-BR", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
-        });
-
-        let message = `*Novo Pedido - Delícia da Bel*\n\n`;
-        message += `*Data/Hora:* ${orderDate}\n`;
-        message += `*Cliente:* ${client.firstName || "Não informado"}\n`;
-        message += `*Telefone:* ${client.phone || "Não informado"}\n\n`;
-
-        message += `*Itens do Pedido:*\n`;
-        let total = 0;
-        order.forEach(item => {
-            const itemTotal = item.price * item.quantity;
-            total += itemTotal;
-            message += `${item.quantity}x ${item.name} - ${
-                item.price > 0 ? "R$" + itemTotal.toFixed(2) : "Incluso"
-            }\n`;
-        });
-
-        if (deliveryType === "entrega") {
-            message += `Taxa de Entrega - R$5.00\n`;
-            total += 5;
-        }
-
-        message += `\n*Total:* R$${total.toFixed(2)}\n`;
-        message += `\n*Entrega:* ${deliveryType === "retirada" ? "Retirada no Local" : "Entrega"}\n`;
-
-        if (deliveryType === "entrega") {
-            message += `\n*Endereço de Entrega:*\n`;
-            message += `${document.getElementById("street").value}, ${document.getElementById("number").value}\n`;
-            message += `${document.getElementById("neighborhood").value}\n`;
-            if (document.getElementById("complement").value) {
-                message += `Complemento: ${document.getElementById("complement").value}\n`;
-            }
-            message += `${document.getElementById("city").value} - ${document.getElementById("state").value}\n`;
-            if (document.getElementById("delivery-notes").value) {
-                message += `Instruções: ${document.getElementById("delivery-notes").value}\n`;
-            }
-        }
-
-        message += `\n*Método de Pagamento:* ${
-            paymentMethod === "dinheiro" ? "Dinheiro" : paymentMethod === "cartao" ? "Cartão" : "PIX"
-        }\n`;
-
-        if (paymentMethod === "dinheiro") {
-            const changeAmount = parseFloat(document.getElementById("change-amount").value) || 0;
-            message += `*Troco para:* R$${changeAmount.toFixed(2)}\n`;
-        }
-
-        const restaurantPhone = "558893240461";
-
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappLink = `https://wa.me/${restaurantPhone}?text=${encodedMessage}`;
-        window.open(whatsappLink, "_blank");
-    }
-
-    // Formata telefone no input
-    document.getElementById("phone").addEventListener("input", function (e) {
-        let value = e.target.value.replace(/\D/g, "");
-        if (value.length > 11) value = value.slice(0, 11);
-
-        if (value.length > 10) {
-            value = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7, 11)}`;
-        } else if (value.length > 5) {
-            value = `(${value.substring(0, 2)}) ${value.substring(2, 6)}-${value.substring(6)}`;
-        } else if (value.length > 2) {
-            value = `(${value.substring(0, 2)}) ${value.substring(2)}`;
-        } else if (value.length > 0) {
-            value = `(${value}`;
-        }
-
-        e.target.value = value;
-    });
-
-    // Mostra/esconde etapas e faz scroll para topo
-    function showStep(step) {
-        document.querySelectorAll(".step-section").forEach(el => el.classList.add("hidden"));
-        const el = document.getElementById(step);
-        if (el) el.classList.remove("hidden");
-        currentStep = step;
-
-        window.scrollTo(0, 0);
-
-        if (step === "payment-step") {
-            updatePaymentSummary();
-        }
-    }
-
-    // Atualiza resumo da etapa pagamento
-    function updatePaymentSummary() {
-        const container = document.getElementById("review-items");
-        const deliveryElement = document.getElementById("delivery-type-review");
-        const totalElement = document.getElementById("review-total");
-
-        container.innerHTML = "";
-
-        if (order.length === 0) {
-            container.innerHTML = "<p>Nenhum item no pedido</p>";
-            totalElement.textContent = "0.00";
-            return;
-        }
-
-        let total = 0;
-
-        order.forEach(item => {
-            const itemTotal = item.price * item.quantity;
-            total += itemTotal;
-
-            const orderItem = document.createElement("div");
-            orderItem.className = "receipt-item";
-            orderItem.innerHTML = `
-                <span>${item.quantity}x ${item.name}</span>
-                <span>${item.price > 0 ? "R$" + itemTotal.toFixed(2) : ""}</span>
-            `;
-            container.appendChild(orderItem);
-        });
-
-        if (deliveryType === "entrega") {
-            const deliveryItem = document.createElement("div");
-            deliveryItem.className = "receipt-item";
-            deliveryItem.innerHTML = `
-                <span>Taxa de Entrega</span>
-                <span>R$5.00</span>
-            `;
-            container.appendChild(deliveryItem);
-            total += 5;
-        }
-
-        deliveryElement.textContent = deliveryType === "retirada" ? "Retirada" : "Entrega";
-        totalElement.textContent = total.toFixed(2);
-    }
-
-    // Logout e reset
-    function logout() {
-        localStorage.removeItem("client");
-        window.location.reload();
-    }
-
-    // Reseta app para o início (após impressão)
-    function resetToMenu() {
-        order = [];
-        deliveryType = "";
-        paymentMethod = "";
-
-        // Limpa formulário endereço e troco
-        ["street", "number", "neighborhood", "complement", "city", "state", "delivery-notes", "change-amount"].forEach(
-            id => {
-                const el = document.getElementById(id);
-                if (el) el.value = "";
-            }
-        );
-
-        // Limpa seleção
-        document.querySelectorAll(".delivery-card").forEach(card => card.classList.remove("selected"));
-
-        updateOrderSummary();
-        showStep("menu");
-    }
-
-    // Setup ao carregar página
-    window.addEventListener("load", () => {
-        try {
-            const client = localStorage.getItem("client");
-            if (client) {
-                const { firstName } = JSON.parse(client);
-                document.getElementById("logged-user").textContent = firstName;
-                document.getElementById("login-page").classList.add("hidden");
-                document.getElementById("main-app").classList.remove("hidden");
-                loadMenu();
-            }
-        } catch {
-            localStorage.removeItem("client");
-        }
-
-        updateOrderSummary();
-        setupAddressValidation();
-    });
-</script>
+    </script>
 </body>
 </html>
